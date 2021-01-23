@@ -26,10 +26,10 @@ const clock = {
     },
     session: {
         index: 1,
-        time: 20,
+        time: 1,
     },
     break: {
-        time: 5,
+        time: 1,
         started: false,
     },
 };
@@ -71,14 +71,35 @@ function toggleClockState() {
 }
 
 function updateCountDownText() {
-    clock.time.seconds++;
-    if (clock.time.seconds == 60) {
-        clock.time.seconds = 0;
-        clock.time.minutes++;
-    }
+    /*
+     * Update Count Down Time Text based on the session and break time
+     */
 
-    if (clock.time.minutes == clock.session.time) {
-        // start break time
+    if (clock.break.started) {
+        clock.time.seconds--;
+        if (clock.time.seconds < 0) {
+            clock.time.seconds = 59;
+            clock.time.minutes--;
+        }
+        if (clock.time.minutes < 0) {
+            // break time over, switch to session time
+            clock.break.started = false;
+            clock.time.minutes = 0;
+            clock.time.seconds = 0;
+            sessionNumberText.innerHTML = `Session ${++clock.session.index}`;
+        }
+    } else {
+        clock.time.seconds++;
+        if (clock.time.seconds == 60) {
+            clock.time.seconds = 0;
+            clock.time.minutes++;
+        }
+        if (clock.time.minutes == clock.session.time) {
+            // session time, switch to break time
+            clock.break.started = true;
+            clock.time.minutes = clock.break.time;
+            sessionNumberText.innerHTML = "Break Time";
+        }
     }
 
     countDownTimeText.innerHTML = `${clock.time.minutes
