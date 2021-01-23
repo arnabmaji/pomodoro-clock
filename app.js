@@ -1,4 +1,5 @@
 // DOM Elements
+let countDownTimer = document.getElementById("countdown-timer");
 let countDownTimeText = document.getElementById("countdown-time-text");
 let sessionNumberText = document.getElementById("session-number");
 let sessionTimeText = document.getElementById("session-time");
@@ -69,7 +70,6 @@ function updateClockState() {
         disableTimeToggleButtons(true);
         return;
     }
-
     toggleClockButton.innerHTML = "Start";
     clearInterval(updateTimeIntervalId);
 }
@@ -109,9 +109,15 @@ function updateTime() {
 }
 
 function updateCountDownText() {
+    let color = getClockColor();
+    countDownTimeText.style.color = countDownTimer.style.borderColor = color;
     countDownTimeText.innerHTML = `${clock.time.minutes
         .toString()
         .padStart(2, "0")}:${clock.time.seconds.toString().padStart(2, "0")}`;
+}
+
+function getClockColor() {
+    return clock.break.started ? "#ff1744" : "#00b7eb";
 }
 
 function resetClock() {
