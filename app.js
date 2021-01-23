@@ -32,8 +32,15 @@ const clock = {
         time: 1,
         started: false,
     },
+    reset() {
+        this.started = false;
+        this.time.minutes = 0;
+        this.time.seconds = 0;
+        this.session.index = 1;
+        this.break.started = false;
+    },
 };
-let updateCountDownTextIntervalId;
+let updateTimeIntervalId;
 
 function toggleTime(e) {
     // Increase or Decrease the Session or break Times
@@ -51,28 +58,23 @@ function toggleTime(e) {
 }
 
 function toggleClockState() {
-    // Start or pause the clock
-
     clock.started = !clock.started;
-
-    if (clock.started) {
-        // clock is on
-        toggleClockButton.innerHTML = "Pause";
-        updateCountDownTextIntervalId = setInterval(updateCountDownText, 1000);
-
-        // disable all the time toggle related buttons
-        increaseSessionTimeButton.disabled = true;
-        decreaseSessionTimeButton.disabled = true;
-        increaseBreakTimeButton.disabled = true;
-        decreaseBreakTimeButton.disabled = true;
-    } else {
-        // clock is off
-        toggleClockButton.innerHTML = "Start";
-        clearInterval(updateCountDownTextIntervalId);
-    }
+    updateClockState();
 }
 
-function updateCountDownText() {
+function updateClockState() {
+    if (clock.started) {
+        toggleClockButton.innerHTML = "Pause";
+        updateTimeIntervalId = setInterval(updateTime, 1000);
+        disableTimeToggleButtons(true);
+        return;
+    }
+
+    toggleClockButton.innerHTML = "Start";
+    clearInterval(updateTimeIntervalId);
+}
+
+function updateTime() {
     /*
      * Update Count Down Time Text based on the session and break time
      */
@@ -88,7 +90,7 @@ function updateCountDownText() {
             clock.break.started = false;
             clock.time.minutes = 0;
             clock.time.seconds = 0;
-            sessionNumberText.innerHTML = `Session ${++clock.session.index}`;
+            clock.session.index++;
         }
     } else {
         clock.time.seconds++;
@@ -100,11 +102,35 @@ function updateCountDownText() {
             // session time, switch to break time
             clock.break.started = true;
             clock.time.minutes = clock.break.time;
-            sessionNumberText.innerHTML = "Break Time";
         }
     }
+    updateSessionText();
+    updateCountDownText();
+}
 
+function updateCountDownText() {
     countDownTimeText.innerHTML = `${clock.time.minutes
         .toString()
         .padStart(2, "0")}:${clock.time.seconds.toString().padStart(2, "0")}`;
+}
+
+function resetClock() {
+    clock.reset();
+    disableTimeToggleButtons(false);
+    updateCountDownText();
+    updateClockState();
+    updateSessionText();
+}
+
+function updateSessionText() {
+    sessionNumberText.innerHTML = clock.break.started
+        ? "Break Time"
+        : "Session " + clock.session.index;
+}
+
+function disableTimeToggleButtons(disable) {
+    increaseSessionTimeButton.disabled = disable;
+    decreaseSessionTimeButton.disabled = disable;
+    increaseBreakTimeButton.disabled = disable;
+    decreaseBreakTimeButton.disabled = disable;
 }
