@@ -33,6 +33,7 @@ const clock = {
         started: false,
     },
 };
+let updateCountDownTextIntervalId;
 
 function toggleTime(e) {
     // Increase or Decrease the Session or break Times
@@ -57,7 +58,7 @@ function toggleClockState() {
     if (clock.started) {
         // clock is on
         toggleClockButton.innerHTML = "Pause";
-        setInterval(updateCountDownText, 1000);
+        updateCountDownTextIntervalId = setInterval(updateCountDownText, 1000);
 
         // disable all the time toggle related buttons
         increaseSessionTimeButton.disabled = true;
@@ -67,6 +68,7 @@ function toggleClockState() {
     } else {
         // clock is off
         toggleClockButton.innerHTML = "Start";
+        clearInterval(updateCountDownTextIntervalId);
     }
 }
 
