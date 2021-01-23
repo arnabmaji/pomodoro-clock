@@ -1,5 +1,5 @@
 // DOM Elements
-let countDownTime = document.getElementById("countdown-time-text");
+let countDownTimeText = document.getElementById("countdown-time-text");
 let sessionNumberText = document.getElementById("session-number");
 let sessionTimeText = document.getElementById("session-time");
 let breakTimeText = document.getElementById("break-time");
@@ -15,11 +15,13 @@ let increaseBreakTimeButton = document.getElementById(
 let decreaseBreakTimeButton = document.getElementById(
     "decrease-break-time-button"
 );
+let toggleClockButton = document.getElementById("toggle-clock-button");
 
 // Global variables
 const clock = {
+    started: false,
     time: {
-        minutes: 10,
+        minutes: 0,
         seconds: 0,
     },
     session: {
@@ -28,6 +30,7 @@ const clock = {
     },
     break: {
         time: 5,
+        started: false,
     },
 };
 
@@ -44,4 +47,41 @@ function toggleTime(e) {
 
     sessionTimeText.innerHTML = clock.session.time;
     breakTimeText.innerHTML = clock.break.time;
+}
+
+function toggleClockState() {
+    // Start or pause the clock
+
+    clock.started = !clock.started;
+
+    if (clock.started) {
+        // clock is on
+        toggleClockButton.innerHTML = "Pause";
+        setInterval(updateCountDownText, 1000);
+
+        // disable all the time toggle related buttons
+        increaseSessionTimeButton.disabled = true;
+        decreaseSessionTimeButton.disabled = true;
+        increaseBreakTimeButton.disabled = true;
+        decreaseBreakTimeButton.disabled = true;
+    } else {
+        // clock is off
+        toggleClockButton.innerHTML = "Start";
+    }
+}
+
+function updateCountDownText() {
+    clock.time.seconds++;
+    if (clock.time.seconds == 60) {
+        clock.time.seconds = 0;
+        clock.time.minutes++;
+    }
+
+    if (clock.time.minutes == clock.session.time) {
+        // start break time
+    }
+
+    countDownTimeText.innerHTML = `${clock.time.minutes
+        .toString()
+        .padStart(2, "0")}:${clock.time.seconds.toString().padStart(2, "0")}`;
 }
