@@ -23,23 +23,29 @@
             </div>
             <br />
             <div id="user-actions">
-                <p class="text-center" style="font-size: 30px">Session 1</p>
+                <p class="text-center" style="font-size: 30px">
+                    Session <span id="session-number">1</span>
+                </p>
                 <div id="timer-config-panel">
                     <div class="row pb-3">
                         <div class="col d-flex justify-content-center">
                             <div>
                                 <p>Session Time</p>
-                                <p>20 Min</p>
+                                <p><span id="session-time">20</span> Min</p>
                                 <div>
                                     <button
+                                        id="decrease-session-time-button"
                                         type="button"
                                         class="btn btn-dark ml-1 btn-sm"
+                                        onclick="toggleTime(this)"
                                     >
                                         -
                                     </button>
                                     <button
+                                        id="increase-session-time-button"
                                         type="button"
                                         class="btn btn-dark ml-1 btn-sm"
+                                        onclick="toggleTime(this)"
                                     >
                                         +
                                     </button>
@@ -49,17 +55,21 @@
                         <div class="col d-flex justify-content-center">
                             <div>
                                 <p>Break Time</p>
-                                <p>5 Min</p>
+                                <p><span id="break-time">5</span> Min</p>
                                 <div>
                                     <button
+                                        id="decrease-break-time-button"
                                         type="button"
                                         class="btn btn-dark ml-1 btn-sm"
+                                        onclick="toggleTime(this)"
                                     >
                                         -
                                     </button>
                                     <button
+                                        id="increase-break-time-button"
                                         type="button"
                                         class="btn btn-dark ml-1 btn-sm"
+                                        onclick="toggleTime(this)"
                                     >
                                         +
                                     </button>
@@ -103,5 +113,6 @@
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
             crossorigin="anonymous"
         ></script>
+        <script src="./app.js"></script>
     </body>
 </html>
