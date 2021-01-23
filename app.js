@@ -27,10 +27,10 @@ const clock = {
     },
     session: {
         index: 1,
-        time: 1,
+        time: 0,
     },
     break: {
-        time: 1,
+        time: 0,
         started: false,
     },
     reset() {
@@ -75,33 +75,24 @@ function updateClockState() {
 }
 
 function updateTime() {
-    /*
-     * Update Count Down Time Text based on the session and break time
-     */
+    let isBreakTime = clock.break.started;
+    let inc = isBreakTime ? -1 : 1;
 
-    if (clock.break.started) {
-        clock.time.seconds--;
-        if (clock.time.seconds < 0) {
-            clock.time.seconds = 59;
-            clock.time.minutes--;
-        }
-        if (clock.time.minutes < 0) {
-            // break time over, switch to session time
-            clock.break.started = false;
+    clock.time.seconds += inc;
+    if (clock.time.seconds < 0 || clock.time.seconds >= 60) {
+        clock.time.seconds = isBreakTime ? 59 : 0;
+        clock.time.minutes += inc;
+    }
+
+    if (clock.time.minutes < 0 || clock.time.minutes >= clock.session.time) {
+        isBreakTime = !isBreakTime;
+        clock.break.started = isBreakTime;
+        if (isBreakTime) {
+            clock.time.minutes = clock.break.time;
+        } else {
             clock.time.minutes = 0;
             clock.time.seconds = 0;
             clock.session.index++;
-        }
-    } else {
-        clock.time.seconds++;
-        if (clock.time.seconds == 60) {
-            clock.time.seconds = 0;
-            clock.time.minutes++;
-        }
-        if (clock.time.minutes == clock.session.time) {
-            // session time, switch to break time
-            clock.break.started = true;
-            clock.time.minutes = clock.break.time;
         }
     }
     updateSessionText();
