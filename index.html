@@ -12,13 +12,75 @@
         />
         <link rel="stylesheet" href="style.css" />
     </head>
+
     <body>
         <div class="container p-3" id="clock-container">
-            <div class="text-center" id="countdown-timer">
+            <div
+                class="d-flex justify-content-center align-items-center"
+                id="countdown-timer"
+            >
                 <div id="countdown-time-text">10:00</div>
             </div>
             <br />
-            <div id="user-actions p-2"></div>
+            <div id="user-actions">
+                <p class="text-center" style="font-size: 30px">Session 1</p>
+                <div id="timer-config-panel">
+                    <div class="row pb-3">
+                        <div class="col d-flex justify-content-center">
+                            <div>
+                                <p>Session Time</p>
+                                <p>20 Min</p>
+                                <div>
+                                    <button
+                                        type="button"
+                                        class="btn btn-dark ml-1 btn-sm"
+                                    >
+                                        -
+                                    </button>
+                                    <button
+                                        type="button"
+                                        class="btn btn-dark ml-1 btn-sm"
+                                    >
+                                        +
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col d-flex justify-content-center">
+                            <div>
+                                <p>Break Time</p>
+                                <p>5 Min</p>
+                                <div>
+                                    <button
+                                        type="button"
+                                        class="btn btn-dark ml-1 btn-sm"
+                                    >
+                                        -
+                                    </button>
+                                    <button
+                                        type="button"
+                                        class="btn btn-dark ml-1 btn-sm"
+                                    >
+                                        +
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    id="action-buttons"
+                    class="mt-2"
+                    style="text-align: center"
+                >
+                    <button type="button" class="btn btn-dark mr-3">
+                        Pause
+                    </button>
+                    <button type="button" class="btn btn-dark ml-3">
+                        Reset
+                    </button>
+                </div>
+            </div>
         </div>
 
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
