@@ -1,0 +1,36 @@
+body {
+    background-color: burlywood;
+}
+
+#clock-container {
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    margin-top: -50px;
+    margin-left: -100px;
+    height: 460px;
+    width: 220px;
+    background-color: black;
+    border-radius: 5px;
+    opacity: 0.6;
+}
+
+#countdown-timer {
+    background-color: white;
+    height: 50%;
+    border: 10px solid #00b7eb;
+    position: relative;
+}
+
+#user-actions {
+    height: 45%;
+}
+
+#countdown-time-text {
+    position: absolute;
+    top: 45%;
+    left: 27%;
+    font-size: 50px;
+    color: #00b7eb;
+    margin: -25px 0 0 -25px;
+}
